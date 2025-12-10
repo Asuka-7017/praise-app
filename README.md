@@ -1,8 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+AI が励ましの言葉をくれるサイトです。Gemini との連携を試すために作ってみました。
 
-## Getting Started
+Vercel で公開してみました。→ [デモページ](https://praise-app-topaz.vercel.app/)
 
-First, run the development server:
+## 技術
+
+- [Next.js 16](https://nextjs.org/)
+- [React 19.2](https://ja.react.dev/)
+- [Node.js 24](https://nodejs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- 楽しむ心
+
+## 環境
+
+Node.js をインストールした環境で、開発サーバを動作させてください。
 
 ```bash
 npm run dev
@@ -14,23 +24,19 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## プロジェクトについて
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Gemini との連携を試すために作ってみました。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Gemini のモデルは、gemini-2.5-flash を使用しています（無料枠）。
 
-## Learn More
+## 課題
 
-To learn more about Next.js, take a look at the following resources:
+- 拡張の余地あり？キャラクターを選択できるようにするなど？
+- 画像を用意したかったです。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 参考サイト
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Gemini API キーを使用する  |  Google AI for Developers](https://ai.google.dev/gemini-api/docs/api-key?hl=ja)
+- [Next.js で Gemini API を動かす最小限のセットアップ #GeminiAPI - Qiita](https://qiita.com/bisketoriba/items/d3ca75e41ed9992aaff1)
+- [Next.JS で Gemini とチャットしてみる](https://zenn.dev/296u/articles/fe1a64b695bc85)

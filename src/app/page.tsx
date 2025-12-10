@@ -1,66 +1,82 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client'
+import { useState } from 'react'
+import Image from 'next/image'
+import styles from './page.module.css'
 
 export default function Home() {
+  const [input, setInput] = useState('')
+  const [response, setResponse] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    // デフォルトの挙動をキャンセル
+    e.preventDefault()
+    if (!input.trim()) return
+
+    setLoading(true)
+    setResponse('')
+
+    try {
+      const res = await fetch('/api/cheer', {
+        method: 'POST',
+        headers: { 'Content-Tyope': 'application/json' },
+        body: JSON.stringify({ comment: input }),
+      })
+      const data = await res.json()
+      if (data.message) {
+        console.log(data.message)
+        setResponse(data.message)
+      }
+    } catch (error) {
+      console.error(error)
+      setResponse(
+        'ごめんなさい、今ちょっと考え事をしていました。もう一度教えてくれますか？'
+      )
+    } finally {
+      setLoading(false)
+    }
+  }
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
+    <main className={styles.main}>
+      <div className={styles.logo}>
+        <h1>CheerUp!</h1>
+        <div className={styles.siteDescription}>
           <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+            コメントを入力すると、AIがあなたにエールを送ります！
+            ちょっと落ち込んだときも、前に進みたいときも、ひとこと書くだけで、笑顔と元気をチャージ！
           </p>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </div>
+      <div className={styles.userComment}>
+        <form onSubmit={handleSubmit}>
+          <textarea
+            rows={2}
+            placeholder="気持ちを教えて！"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className={styles.userTextarea}
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className={styles.buttonSubmit}
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            {loading ? 'AIが言葉を紡いでいます……' : '励ましてもらう！'}
+          </button>
+        </form>
+      </div>
+      <div className={styles.resComment}>
+        <div className={styles.resText}>
+          {response ? (
+            <p>{response}</p>
+          ) : !loading ? (
+            <p>今日あったことや、今の気持ちを書いてみて！ 全力で励ますよ！</p>
+          ) : (
+            <p>AIが言葉を紡いでいます……</p>
+          )}
         </div>
-      </main>
-    </div>
-  );
+        <div className={styles.resImage}>😊👍</div>
+      </div>
+    </main>
+  )
 }
